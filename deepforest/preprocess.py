@@ -13,7 +13,7 @@ import torch
 import warnings
 import rasterio
 import geopandas as gpd
-from deepforest.utilities import pandas_to_geopandas
+from deepforest.utilities import read_file
 from shapely import geometry
 
 def preprocess_image(image):
@@ -189,7 +189,7 @@ def split_raster(annotations_file,
 
     # Load annotations file and coerce dtype
     if type(annotations_file) == str:
-        annotations = pandas_to_geopandas(annotations_file)
+        annotations = read_file(annotations_file)
     elif type(annotations_file) == gpd.GeoDataFrame:
         annotations = annotations_file
     else:
