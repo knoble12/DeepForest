@@ -106,6 +106,7 @@ def save_crop(base_dir, image_name, index, crop):
 def split_raster(annotations_file,
                  path_to_raster=None,
                  numpy_image=None,
+                 root_dir=None,
                  base_dir=None,
                  patch_size=400,
                  patch_overlap=0.05,
@@ -116,6 +117,7 @@ def split_raster(annotations_file,
 
     Args:
         numpy_image: a numpy object to be used as a raster, usually opened from rasterio.open.read(), in order (height, width, channels)
+        root_dir: (str): Root directory of annotations file, if not supplied, will be inferred from annotations_file
         path_to_raster: (str): Path to a tile that can be read by rasterio on disk
         annotations_file (str or pd.DataFrame): A pandas dataframe or path to annotations csv file. In the format -> image_path, xmin, ymin, xmax, ymax, label
         save_dir (str): Directory to save images
@@ -190,7 +192,7 @@ def split_raster(annotations_file,
 
     # Load annotations file and coerce dtype
     if type(annotations_file) == str:
-        annotations = read_file(annotations_file)
+        annotations = read_file(annotations_file, root_dir=root_dir)
     elif type(annotations_file) == gpd.GeoDataFrame:
         annotations = annotations_file
     else:
